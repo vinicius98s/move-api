@@ -21,7 +21,10 @@ class App {
   }
 
   private database(): void {
-    mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/move', { useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect(
+      process.env.MONGO_URI || 'mongodb://mongo:27017/move',
+      { useNewUrlParser: true, useUnifiedTopology: true },
+    );
   }
 
   private routes(): void {
