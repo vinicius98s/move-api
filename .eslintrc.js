@@ -2,22 +2,22 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   env: {
     es6: true,
-    node: true
+    node: true,
   },
   plugins: ["@typescript-eslint"],
   extends: [
     "plugin:@typescript-eslint/recommended",
     "airbnb-base",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
   ],
   globals: {
     Atomics: "readonly",
-    SharedArrayBuffer: "readonly"
+    SharedArrayBuffer: "readonly",
   },
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: "module"
+    sourceType: "module",
   },
   plugins: ["@typescript-eslint"],
   rules: {
@@ -26,13 +26,14 @@ module.exports = {
     "@typescript-eslint/camelcase": "off",
     camelcase: "off",
     "func-names": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "object-curly-newline": "off",
   },
   settings: {
     "import/resolver": {
       node: {
-        extensions: [".js", ".ts"]
-      }
-    }
-  }
+        extensions: [".js", ".ts"],
+      },
+    },
+  },
 };

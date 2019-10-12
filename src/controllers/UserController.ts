@@ -3,14 +3,29 @@ import { Request, Response } from 'express';
 import User from '../schemas/User';
 
 class UserController {
+  public async index(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    const user = await User.findById(id);
+
+    if (user) {
+      const { _id, name, bio, email } = user;
+
+      return res.json({
+        _id,
+        name,
+        bio,
+        email,
+      });
+    }
+
+    return res.status(400).json({ message: 'Usuário não encontrado' });
+  }
+
   public async update(req: Request, res: Response): Promise<Response> {
-    const {
-      name = '',
-      bio = '',
-      password = '',
-      oldPassword = '',
-      id,
-    } = req.body;
+    const { name, bio, password, oldPassword } = req.body;
+
+    const { id } = req.params;
 
     // ! TODO: AUTH
     if (!id) {
@@ -25,19 +40,21 @@ class UserController {
 
     const user = await User.findById(id);
 
-    if (!user) return res.status(400).json({ message: 'Usuário não existe' });
+    if (user) {
+      if (oldPassword && !(await user.comparePassword(oldPassword))) {
+        return res.status(400).json({ message: 'Senha antiga incorreta' });
+      }
 
-    if (oldPassword && !await user.comparePassword(oldPassword)) {
-      return res.status(400).json({ message: 'Senha antiga incorreta' });
+      if (name) user.name = name;
+      if (bio) user.bio = bio;
+      if (password) user.password = password;
+
+      await user.save();
+
+      return res.json(user);
     }
 
-    if (name) user.name = name;
-    if (bio) user.bio = bio;
-    if (password) user.password = password;
-
-    await user.save();
-
-    return res.json(user);
+    return res.status(400).json({ message: 'Usuário não encontrado' });
   }
 
   public async store(req: Request, res: Response): Promise<Response> {
