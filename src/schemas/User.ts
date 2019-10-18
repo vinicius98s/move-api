@@ -6,6 +6,7 @@ export interface UserInterface extends Document {
   name: string,
   password: string,
   bio?: string,
+  balance: number,
   comparePassword(password: string): Promise<boolean>,
 }
 
@@ -22,6 +23,11 @@ const UserSchema = new Schema({
   name: {
     type: String,
     required: true,
+  },
+  balance: {
+    type: Number,
+    required: true,
+    default: 0,
   },
   bio: String,
 }, {

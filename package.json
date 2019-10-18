@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.ts",
+    "dev": "docker-compose up",
     "build": "tsc",
     "prod": "node ./dist/server.js"
   },
