@@ -1,10 +1,8 @@
 import { Response, Request } from 'express';
 
-import { UserInterface } from '../schemas/User';
-
 class BalanceController {
   public async getBalance(
-    req: Request & { user: UserInterface },
+    req: Request,
     res: Response,
   ): Promise<Response> {
     const { balance } = req.user;
@@ -12,22 +10,32 @@ class BalanceController {
     return res.json({ balance });
   }
 
-  public async addToBalance(
-    req: Request & { user: UserInterface },
+  public async updateBalance(
+    req: Request,
     res: Response,
   ): Promise<Response> {
     const { user } = req;
     const { value } = req.body;
 
-    if (!Number(value) && value < 1) {
+    if (!Number(value) || !value) {
       return res.status(400).json({ message: 'Valor inválido' });
     }
 
     user.balance += value;
 
-    await user.save();
+    if (user.balance < 0) {
+      return res.status(400).json({ message: 'Saldo insuficiente' });
+    }
 
-    return res.json(user);
+    try {
+      await user.save();
+
+      return res.json({
+        balance: user.balance,
+      });
+    } catch (err) {
+      return res.status(500).json({ message: 'Erro ao atualizar balanço' });
+    }
   }
 }
 

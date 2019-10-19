@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "docker-compose up",
+    "start": "nodemon src/server.ts",
     "build": "tsc",
     "prod": "node ./dist/server.js"
   },

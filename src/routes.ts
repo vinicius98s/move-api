@@ -11,5 +11,6 @@ routes.put('/user/:id', UserController.update);
 routes.post('/user', UserController.store);
 
 routes.get('/balance/:id', findUser, BalanceController.getBalance);
+routes.put('/balance/:id', findUser, BalanceController.updateBalance);
 
 export default routes;
