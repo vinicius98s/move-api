@@ -28,6 +28,7 @@ module.exports = {
     "func-names": "off",
     "no-param-reassign": "off",
     "object-curly-newline": "off",
+    "no-new": "off",
   },
   settings: {
     "import/resolver": {
