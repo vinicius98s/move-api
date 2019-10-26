@@ -7,7 +7,7 @@ export default async function (
   res: Response,
   next: NextFunction,
 ): Promise<void | Response> {
-  const { id } = req.params;
+  const id = req.userId;
 
   try {
     const user = await User.findById(id);
@@ -18,6 +18,6 @@ export default async function (
 
     return next();
   } catch (error) {
-    return res.status(400).json({ message: 'Usuário não encontrado' });
+    return res.status(400).json({ error: 'Usuário não encontrado' });
   }
 }

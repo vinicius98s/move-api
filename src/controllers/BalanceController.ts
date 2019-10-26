@@ -18,13 +18,13 @@ class BalanceController {
     const { value } = req.body;
 
     if (!Number(value) || !value) {
-      return res.status(400).json({ message: 'Valor inválido' });
+      return res.status(400).json({ error: 'Valor inválido' });
     }
 
     user.balance += value;
 
     if (user.balance < 0) {
-      return res.status(400).json({ message: 'Saldo insuficiente' });
+      return res.status(400).json({ error: 'Saldo insuficiente' });
     }
 
     try {
@@ -34,7 +34,7 @@ class BalanceController {
         balance: user.balance,
       });
     } catch (err) {
-      return res.status(500).json({ message: 'Erro ao atualizar balanço' });
+      return res.status(500).json({ error: 'Erro ao atualizar balanço' });
     }
   }
 }
