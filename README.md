@@ -18,6 +18,7 @@ yarn install
 ```
 
 ## Usage
+To run this project you must have Docker installed on your machine. Make sure you have everything up by running the command: `docker -v` and `docker-compose -v`.
 
 ```sh
 yarn dev
