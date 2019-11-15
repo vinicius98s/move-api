@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
 import User from '../schemas/User';
+import authConfig from '../config/auth';
 
 class UserController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -65,7 +67,13 @@ class UserController {
 
     const user = await User.create(req.body);
 
-    return res.json(user);
+    // This was the fastest way to signup after login
+    return res.json({
+      user,
+      token: jwt.sign({ _id: user._id }, authConfig.secret, {
+        expiresIn: authConfig.expiresIn,
+      }),
+    });
   }
 }
 
