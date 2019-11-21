@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "docker-compose up -d && docker logs --tail 10 -f move-api_app_1",
+    "dev": "docker-compose up -d && docker logs --tail 0 -f move-api_app_1",
     "start": "nodemon src/server.ts",
     "build": "tsc",
     "prod": "node ./dist/server.js"

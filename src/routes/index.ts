@@ -10,13 +10,13 @@ import auth from '../middlewares/auth';
 const routes = Router();
 
 routes.post('/users', UserController.store);
+routes.get('/users', auth, getUserData, UserController.index);
+routes.put('/users', auth, getUserData, UserController.update);
+
 routes.post('/sessions', SessionController.store);
 
-routes.use(auth);
-
-routes.get('/users', getUserData, UserController.index);
-routes.put('/users', getUserData, UserController.update);
-routes.get('/balance', getUserData, BalanceController.getBalance);
-routes.put('/balance', getUserData, BalanceController.updateBalance);
+routes.get('/balance', auth, getUserData, BalanceController.getBalance);
+routes.get('/balance/history', auth, getUserData, BalanceController.getBalanceHistory);
+routes.put('/balance', auth, getUserData, BalanceController.updateBalance);
 
 export default routes;

@@ -1,12 +1,19 @@
 import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
+interface BalanceHistory {
+  value: number,
+  date: number,
+  paymentType: string,
+}
+
 export interface UserInterface extends Document {
   email: string,
   name: string,
   password: string,
   bio?: string,
   balance: number,
+  balanceHistory: Array<BalanceHistory>,
   comparePassword(password: string): Promise<boolean>,
 }
 
@@ -29,6 +36,7 @@ const UserSchema = new Schema({
     required: true,
     default: 0,
   },
+  balanceHistory: Array,
   bio: String,
 }, {
   timestamps: true,

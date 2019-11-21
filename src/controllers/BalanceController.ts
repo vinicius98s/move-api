@@ -15,7 +15,7 @@ class BalanceController {
     res: Response,
   ): Promise<Response> {
     const { user } = req;
-    const { value } = req.body;
+    const { value, paymentType } = req.body;
 
     if (!Number(value) || !value) {
       return res.status(400).json({ error: 'Valor inválido' });
@@ -27,6 +27,15 @@ class BalanceController {
       return res.status(400).json({ error: 'Saldo insuficiente' });
     }
 
+    user.balanceHistory = [
+      ...user.balanceHistory,
+      {
+        value,
+        paymentType: value > 0 ? paymentType : null,
+        date: new Date().getTime(),
+      },
+    ];
+
     try {
       await user.save();
 
@@ -36,6 +45,15 @@ class BalanceController {
     } catch (err) {
       return res.status(500).json({ error: 'Erro ao atualizar balanço' });
     }
+  }
+
+  public async getBalanceHistory(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    const { balanceHistory, balance } = req.user;
+
+    return res.json({ balanceHistory, balance });
   }
 }
 
